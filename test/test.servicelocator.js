@@ -4,8 +4,10 @@ $(function(){
 	module("jquery servicelocator plugin", {
 		setup : function(){
 
+
 			$.addService("myService", {
-				getData: function (data, success, error) {		
+			  
+				getRemoteService: function (data, success, error) {		
 					this.execute("ajax", {
 						url: "dummy.json", 
 						data: data, 
@@ -13,11 +15,11 @@ $(function(){
 						success: success, 
 						error: error
 					}, 
-					this.getCampaignsFixture, 
+					this.fixture.generate(this.getRemoteServiceFixture, 25),
 					true);
 				},
 
-				getCampaignsFixture: {
+				getRemoteServiceFixture: {
 					"someData":200,
 					"numbers":"1...35", 
 					"bla":["uno", "dos", "tres"],
@@ -26,24 +28,33 @@ $(function(){
 			});
 		},
 		teardown : function(){
-			$.serviceLocator.myService = null;
+			$._serviceLocator.myService = null;
 		}
 	});
 
 
 
 	test("serviceLocator should exist", function(){
-		equals(typeof $.serviceLocator, "object", "service locator exists");
+		equals(typeof $._serviceLocator, "object", "service locator exists");
+
+    console.log($._serviceLocator);
 
 		var result = null;
 		
-		$.serviceLocator.myService.getData({x:1},
-			function(data) {
+		var s = $.getService("myService");
+		
+		console.log(s);
+		
+		$.getService("myService").getData( null,	
+		  function(data) {
 				result = data;
+				console.log("success", result);
 			}, 
 			function(data) {
 				console.log("error", arguments);
 			});
+			
+			
 			
 			//console.log(result);
 			equals(result.someData, 200, "fixture was served");
