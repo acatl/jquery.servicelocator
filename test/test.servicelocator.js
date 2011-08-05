@@ -1,3 +1,10 @@
+/*
+ * ServiceLocator jQuery plugin
+ *
+ * Copyright 2011, Acatl Pacheco
+ * Licensed under the MIT License.
+ **/
+ 
 $(function(){
 
 	/* servicelocator plugin */
