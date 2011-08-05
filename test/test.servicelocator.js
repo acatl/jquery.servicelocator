@@ -4,7 +4,6 @@ $(function(){
 	module("jquery servicelocator plugin", {
 		setup : function(){
 
-
 			$.addService("myService", {
 			  
 				getRemoteService: function (data, success, error) {		
@@ -37,15 +36,8 @@ $(function(){
 	test("serviceLocator should exist", function(){
 		equals(typeof $._serviceLocator, "object", "service locator exists");
 
-    console.log($._serviceLocator);
-
 		var result = null;
-		
-		var s = $.getService("myService");
-		
-		console.log(s);
-		
-		$.getService("myService").getData( null,	
+		$.getService("myService").getRemoteService( null,	
 		  function(data) {
 				result = data;
 				console.log("success", result);
@@ -54,10 +46,8 @@ $(function(){
 				console.log("error", arguments);
 			});
 			
-			
-			
 			//console.log(result);
-			equals(result.someData, 200, "fixture was served");
+			equals(result[0].someData, 200, "fixture was served");
 	});
 
 });
